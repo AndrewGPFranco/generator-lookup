@@ -11,8 +11,8 @@ func SetupRouter() *gin.Engine {
 
 	v1 := r.Group("/api/v1")
 	{
-		v1.POST("/generate-cnpj", handler.GenerateCNPJ)
-		v1.POST("/generate-cpf", handler.GenerateCPF)
+		v1.GET("/generate-cnpj", handler.GenerateCNPJ)
+		v1.GET("/generate-cpf", handler.GenerateCPF)
 	}
 
 	return r

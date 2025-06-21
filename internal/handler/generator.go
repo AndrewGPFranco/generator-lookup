@@ -17,7 +17,7 @@ func init() {
 func GenerateCNPJ(c *gin.Context) {
 	cnpj := generateValidCNPJ()
 	c.JSON(http.StatusOK, gin.H{
-		"cnpj":      cnpj,
+		"lookup":      cnpj,
 		"formatted": formatCNPJ(cnpj),
 	})
 }
@@ -25,7 +25,7 @@ func GenerateCNPJ(c *gin.Context) {
 func GenerateCPF(c *gin.Context) {
 	cpf := generateValidCPF()
 	c.JSON(http.StatusOK, gin.H{
-		"cpf":       cpf,
+		"lookup":       cpf,
 		"formatted": formatCPF(cpf),
 	})
 }
