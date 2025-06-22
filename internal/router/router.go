@@ -11,8 +11,9 @@ func SetupRouter() *gin.Engine {
 
 	v1 := r.Group("/api/v1")
 	{
-		v1.GET("/generate-cnpj", handler.GenerateCNPJ)
 		v1.GET("/generate-cpf", handler.GenerateCPF)
+		v1.GET("/generate-cnpj", handler.GenerateCNPJ)
+		v1.GET("/generate-password/:length", handler.GeneratePassword)
 	}
 
 	return r

@@ -14,10 +14,27 @@ func init() {
 	rand.NewSource(time.Now().UnixNano())
 }
 
+func GeneratePassword(c *gin.Context) {
+	lengthParam := c.Param("length")
+
+	length, err := strconv.Atoi(lengthParam)
+	if err != nil || length <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid length",
+		})
+		return
+	}
+
+	password := generateRandomPassword(length)
+	c.JSON(http.StatusOK, gin.H{
+		"password": password,
+	})
+}
+
 func GenerateCNPJ(c *gin.Context) {
 	cnpj := generateValidCNPJ()
 	c.JSON(http.StatusOK, gin.H{
-		"lookup":      cnpj,
+		"lookup":    cnpj,
 		"formatted": formatCNPJ(cnpj),
 	})
 }
@@ -25,9 +42,23 @@ func GenerateCNPJ(c *gin.Context) {
 func GenerateCPF(c *gin.Context) {
 	cpf := generateValidCPF()
 	c.JSON(http.StatusOK, gin.H{
-		"lookup":       cpf,
+		"lookup":    cpf,
 		"formatted": formatCPF(cpf),
 	})
+}
+
+func generateRandomPassword(lenght int) string {
+	const charset = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+	var seededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
+
+	password := make([]byte, lenght)
+
+	for i := range password {
+		password[i] = charset[seededRand.Intn(len(charset))]
+	}
+
+	return string(password)
 }
 
 func generateValidCNPJ() string {
